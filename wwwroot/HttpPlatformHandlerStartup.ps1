@@ -75,6 +75,10 @@ log("HTTP_PLATFORM_PORT is: $port")
 log("Updating sonar.web.port to $port")
 $configContents = $configContents -ireplace '^#?sonar\.web\.port=.*', "sonar.web.port=$port"
 
+log("Adding Community Branch plugin version 1.8.1")
+$configContents = $configContents -ireplace '^#?sonar\.web\.javaAdditionalOpts=.*', "sonar.web.javaAdditionalOpts=-javaagent:./extensions/plugins/sonarqube-community-branch-plugin-1.8.1.jar=web"
+$configContents = $configContents -ireplace '^#?sonar\.ce\.javaAdditionalOpts=.*', "sonar.ce.javaAdditionalOpts=-javaagent:./extensions/plugins/sonarqube-community-branch-plugin-1.8.1.jar=ce"
+
 log('Saving updated sonar.properties contents')
 $configContents | Out-String | Set-Content -Path $propFile.FullName -NoNewLine
 
